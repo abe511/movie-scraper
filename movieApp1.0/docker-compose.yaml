@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: movieapp
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - db
+  db:
+    image: "postgres:14.2-alpine"
+    container_name: postgres-test
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: data
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    restart:
+      always
+
+# #################
+# add this fields
+# db:
+#   driver: local
+# network:
+#   net1: {}
+
+
+# start this compose stack detached
+# docker compose -f docker-compose-postgres.yml up -d
+
+# run docker container detached
+# docker run --name postgres -e POSTGRES_PASSWORD=123 -d -p 5432:5432 postgres:13.6-alpine
+
+
+
+# run detached
+# docker-compose up -d
+
+# check processes
+# docker-compose ps
+
+# run a single command for services
+# docker-compose run app env
+
+# stop services
+# docker-compose stop
+
+# stop and remove containers (and volumes)
+# docker-compose down --volumes
